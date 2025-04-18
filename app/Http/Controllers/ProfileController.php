@@ -25,17 +25,17 @@ class ProfileController extends Controller
         $user->name = $request->name;
 
         if ($request->hasFile('photo')) {
-            
+
             if ($user->photo) {
                 Storage::delete('public/' . $user->photo);
             }
 
-            
+
             $path = $request->file('photo')->store('profile_photos', 'public');
             $user->photo = $path;
         }
 
-        $user->save();
+        // $user->save();
 
         return redirect()->back()->with('success', 'Profile updated!');
     }

@@ -11,7 +11,7 @@ class AuthController extends Controller
 {
     public function showRegister()
     {
-        return view('auth.register'); 
+        return view('auth.register');
     }
 
     public function register(Request $request)
@@ -30,6 +30,7 @@ class AuthController extends Controller
 
         Auth::login($user);
 
+        redirect()->intended('/dashboard');
         return response()->json(['success' => true]);
     }
 

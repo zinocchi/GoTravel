@@ -107,7 +107,7 @@
   </div>
 </div>
 
-<script>
+<script> 
   function toggleModal(show) {
     const modal = document.getElementById('authModal');
     if (modal) {

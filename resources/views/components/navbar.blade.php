@@ -23,10 +23,10 @@
         <button onclick="toggleModal(true)" class="text-sm font-semibold text-white-700 hover:text-blue-500">
             Sign Up
         </button>
-       
+
 @endguest
 
-    
+
 
     @if (session('login_success'))
     <div id="loginSuccessAlert" class="fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded shadow-md z-50 transition-opacity duration-1000 opacity-100">
@@ -151,7 +151,7 @@
             Don’t have an account?
             <button onclick="switchToRegister()" class="text-blue-600 hover:underline">Sign up</button>
         </p>
-        
+
     </div>
 </div>
 
@@ -173,45 +173,44 @@
         }
     }
 
-    document.addEventListener("DOMContentLoaded", function() {
-        const form = document.getElementById('registerForm');
-        if (form) {
-            form.addEventListener('submit', async function(e) {
-                e.preventDefault();
+    // document.addEventListener("DOMContentLoaded", function() {
+    //     const form = document.getElementById('registerForm');
+    //     if (form) {
+    //         form.addEventListener('submit', async function(e) {
+    //             e.preventDefault();
 
-                const formData = new FormData(form);
+    //             const formData = new FormData(form);
 
-                try {
-                    const response = await fetch(form.action, {
-                        method: "POST",
-                        headers: {
-                            "X-CSRF-TOKEN": document.querySelector('input[name="_token"]')
-                                .value,
-                            "Accept": "application/json"
-                        },
-                        body: formData
-                    });
+    //             try {
+    //                 const response = await fetch(form.action, {
+    //                     method: "POST",
+    //                     headers: {
+    //                         "X-CSRF-TOKEN": document.querySelector('input[name="_token"]')
+    //                             .value,
+    //                         "Accept": "application/json"
+    //                     },
+    //                     body: formData
+    //                 });
 
-                    if (response.ok) {
-                        toggleModal(false);
-                        const notif = document.createElement('div');
-                        notif.className =
-                            'fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded shadow-md z-50';
-                        notif.innerText = 'Sign up successful!';
-                        document.body.appendChild(notif);
-                        setTimeout(() => notif.remove(), 4000);
-                        form.reset();
-                    } else {
-                        const errorData = await response.json();
-                        alert(Object.values(errorData.errors).flat().join('\n'));
-                    }
-                } catch (err) {
-                    alert('Something went wrong.');
-                    console.error(err);
-                }
-            });
-        }
-    });
+    //                 if (response.ok) {
+    //                     toggleModal(false);
+    //                     const notif = document.createElement('div');
+    //                     notif.className =
+    //                         'fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded shadow-md z-50';
+    //                     notif.innerText = 'Sign up successful!';
+    //                     document.body.appendChild(notif);
+    //                     setTimeout(() => notif.remove(), 4000);
+    //                     form.reset();
+    //                 } else {
+    //                     const errorData = await response.json();
+    //                     alert(Object.values(errorData.errors).flat().join('\n'));
+    //                 }
+    //             } catch (err) {
+    //                 alert('Something went wrong.' . err);
+    //             }
+    //         });
+    //     }
+    // });
 </script>
 
 <script>
@@ -224,26 +223,26 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const formData = new FormData(loginForm);
 
-            try {
-                const response = await fetch(loginForm.action, {
-                    method: "POST",
-                    headers: {
-                        "X-CSRF-TOKEN": document.querySelector('input[name="_token"]').value,
-                        "Accept": "application/json"
-                    },
-                    body: formData
-                });
+            // try {
+            //     const response = await fetch(loginForm.action, {
+            //         method: "POST",
+            //         headers: {
+            //             "X-CSRF-TOKEN": document.querySelector('input[name="_token"]').value,
+            //             "Accept": "application/json"
+            //         },
+            //         body: formData
+            //     });
 
-                if (response.ok) {
-                    window.location.href = "/"; 
-                } else {
-                    const errorData = await response.json();
-                    alert(Object.values(errorData.errors).flat().join('\n'));
-                }
-            } catch (err) {
-                alert('Something went wrong.');
-                console.error(err);
-            }
+            //     if (response.ok) {
+            //         window.location.href = "/";
+            //     } else {
+            //         const errorData = await response.json();
+            //         alert(Object.values(errorData.errors).flat().join('\n'));
+            //     }
+            // } catch (err) {
+            //     alert('Something went wrong.' . err);
+            //     console.error(err);
+            // }
         });
     }
 });
@@ -254,8 +253,8 @@ document.addEventListener("DOMContentLoaded", function () {
         const alertBox = document.getElementById('loginSuccessAlert');
         if (alertBox) {
             setTimeout(() => {
-                alertBox.remove(); 
-            }, 4000); 
+                alertBox.remove();
+            }, 4000);
         }
     });
 </script>
@@ -281,7 +280,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 <script>
     if (response.ok) {
-    window.location.href = "/"; 
+    window.location.href = "/";
 }
 </script>
 <script>

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('index');
-});
+})->name('index');
 
 Route::get('/to-do', function () {
     return view('to-do');
@@ -24,6 +24,8 @@ Route::get('/fligths', function () {
 });
 
 use App\Http\Controllers\AuthController;
+use Illuminate\Support\Facades\Auth;
+
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 
 
@@ -37,19 +39,19 @@ Route::get('/register', function () {
 
 
 Route::get('/login', function () {
-    return view('login'); 
+    return view('login');
 });
 
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
-    
+
 
 
 Route::post('/logout', function () {
     Auth::logout();
-    return redirect('/'); 
+    return redirect('/');
 })->name('logout');
-  
+
 use App\Http\Controllers\ProfileController;
 
 Route::middleware(['auth'])->group(function () {

@@ -22,11 +22,6 @@ class AuthController extends Controller
             'password' => 'required|string|min:6',
         ]);
 
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-            session()->flash('login_success', true); 
-            return response()->json(['success' => true]);
-        }
         $user = User::create([
             'name' => $validatedData['name'],
             'email' => $validatedData['email'],
@@ -34,25 +29,26 @@ class AuthController extends Controller
         ]);
 
         Auth::login($user);
-        return redirect('/')->with('login_success', true);
-        
-      
+
+
+        // dd('masuk');
+        return redirect()->route('index');
     }
 
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
-    
+
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            session()->flash('login_success', true); 
-            return response()->json(['success' => true]);
+            // session()->flash('login_success', true);
+            return redirect()->route('index');
         }
-    
+
         return response()->json([
             'errors' => ['email' => ['Invalid credentials.']]
         ], );
     }
-    
-    
+
+
 }

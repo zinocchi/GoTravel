@@ -42,18 +42,27 @@ Route::get('/login', function () {
 
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
+    
+
 
 Route::post('/logout', function () {
     Auth::logout();
     return redirect('/'); 
 })->name('logout');
-
+  
 use App\Http\Controllers\ProfileController;
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'show'])->name('profile');
     Route::post('/profile', [ProfileController::class, 'update']);
 });
+
+use App\Http\Controllers\SearchController;
+
+Route::get('/search', [SearchController::class, 'index'])->name('search');
+
+
+
 
 
 

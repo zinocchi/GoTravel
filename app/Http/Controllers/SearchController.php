@@ -1,20 +1,25 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
-use App\Models\Destination;
+use App\Models\Hotel;
+use App\Models\Villa;
+use App\Models\Flight;
+use App\Models\ToDo;
 
 class SearchController extends Controller
 {
     public function index(Request $request)
     {
-        $query = $request->input('query');
+        $query = $request->input('q');
 
-    
-        $results = Destination::where('name', 'like', '%' . $query . '%')
-                    ->orWhere('description', 'like', '%' . $query . '%')
-                    ->get();
+        $hotels = Hotel::where('name', 'like', "%{$query}%")->get();
+        $villas = Villa::where('name', 'like', "%{$query}%")->get();
+        $flights = Flight::where('destination', 'like', "%{$query}%")->get();
+        $toDos  = ToDo::where('activity', 'like', "%{$query}%")->get();
 
-        return view('search.results', compact('results', 'query'));
+        return view('search.results', compact('query', 'hotels', 'villas', 'flights', 'toDos'));
     }
 }
+ 

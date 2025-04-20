@@ -20,18 +20,22 @@
       <h1 class="text-2xl font-bold flex items-center">
         <span class="text-green-500">GO</span> Travel 
       </h1>
-      <div class="flex-1 px-6 hidden md:flex justify-center">
+      <form action="{{ route('search') }}" method="GET" class="w-full">
         <div class="relative w-full max-w-md">
           <input 
             type="text" 
+            name="q"
             placeholder="Search" 
             class="w-full px-4 py-2 border rounded-full ml-1"
           />
-          <svg class="absolute right-4 top-2.5 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-          </svg>
+          <button type="submit" class="absolute right-4 top-2.5">
+            <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </button>
         </div>
-      </div>
+      </form>
+      
 
       <div class="flex items-center space-x-6 font-medium text-sm">
         <a href="#" class="hover:text-green-600">Discover</a>

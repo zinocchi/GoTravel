@@ -22,6 +22,11 @@ class AuthController extends Controller
             'password' => 'required|string|min:6',
         ]);
 
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+            session()->flash('login_success', true); 
+            return response()->json(['success' => true]);
+        }
         $user = User::create([
             'name' => $validatedData['name'],
             'email' => $validatedData['email'],
@@ -29,23 +34,25 @@ class AuthController extends Controller
         ]);
 
         Auth::login($user);
-
-        // redirect()->intended('/dashboard');
-        return response()->json(['success' => true]);
+        return redirect('/')->with('login_success', true);
+        
+      
     }
 
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
-
+    
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            // return redirect()->intended('/dashboard');
-        return response()->json(['success' => true]);
+            session()->flash('login_success', true); 
+            return response()->json(['success' => true]);
         }
-
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ]);
+    
+        return response()->json([
+            'errors' => ['email' => ['Invalid credentials.']]
+        ], );
     }
+    
+    
 }

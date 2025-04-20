@@ -1,67 +1,62 @@
-<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 <style>
     body {
         font-family: 'Poppins', sans-serif;
     }
 </style>
 
-<div>
+
     <header class="flex justify-between items-center p-5 bg-white shadow-md">
         <h1 class="text-2xl font-bold flex items-center">
             <span class="text-green-500">GO</span> Travel
         </h1>
-
-        <nav class="space-x-4 text-xl cursor-pointer transition duration-500">
-            <a href="#" class="text-gray-600 text-sm font-bold hover:text-blue-500">Discover Trips</a>
-            <a href="#" class="text-gray-600 text-sm font-bold hover:text-blue-500">Review</a>
-            <a href="#" class="text-gray-600 text-sm font-bold hover:text-blue-500">More</a>
+        <nav class="flex-1 text-center justify-center">
+            <div class="inline-block space-x-6">
+                <a href="#" class="text-gray-600 text-sm font-bold hover:text-blue-500">Discover </a>
+                <a href="#" class="text-gray-600 text-sm font-bold hover:text-blue-500">Trips</a>
+                <a href="#" class="text-gray-600 text-sm font-bold hover:text-blue-500">Review</a>
+                <a href="#" class="text-gray-600 text-sm font-bold hover:text-blue-500">More</a>
+            </div>
         </nav>
+        @guest
+    <div class="space-x-4 px-4 py-2 border rounded-lg bg-black text-white">
+        <button onclick="toggleModal(true)" class="text-sm font-semibold text-white-700 hover:text-blue-500">
+            Sign Up
+        </button>
+       
+@endguest
 
-        @if (session('registered'))
-            <div class="fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded shadow-md z-50">
-                Sign up successful!
-            </div>
-        @endif
+    
 
-        @auth
-            <div class="flex items-center space-x-3">
-                <a href="{{ route('profile') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
+    @if (session('login_success'))
+    <div id="loginSuccessAlert" class="fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded shadow-md z-50 transition-opacity duration-1000 opacity-100">
+        Login successful!
+    </div>
+    @endif
 
-                <img src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&background=33dfa1&color=fff&rounded=true&size=32"
-                    alt="Avatar" class="w-8 h-8 rounded-full" />
-                <span class="text-sm font-semibold text-gray-700">{{ Auth::user()->name }}</span>
-            </div>
-        @else
-            @auth
-                <div class="relative group">
-                    <div class="flex items-center space-x-2 cursor-pointer">
-                        <img src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&background=33dfa1&color=fff&rounded=true&size=32"
-                            alt="Avatar" class="w-8 h-8 rounded-full" />
-                        <span class="text-sm font-semibold text-gray-700">{{ Auth::user()->name }}</span>
-                    </div>
 
-                    <div
-                        class="absolute right-0 mt-2 bg-white border rounded-lg shadow-lg py-2 w-40 hidden group-hover:block z-50">
-                        <a href="/dashboard" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Dashboard</a>
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-                            <button type="submit" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                Logout
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            @else
-                <button onclick="toggleModal(true)"
-                    class="bg-black text-white px-4 py-2 rounded-full hover:bg-black transition">
-                    Sign Up
-                </button>
-            @endauth
+@auth
+<div class="relative" id="profileDropdown">
+    <button onclick="toggleProfileMenu()" class="flex items-center space-x-2 cursor-pointer">
+        <img src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&background=33dfa1&color=fff&rounded=true&size=32"
+            alt="Avatar" class="w-8 h-8 rounded-full" />
+        <span class="text-sm font-semibold text-gray-700">{{ Auth::user()->name }}</span>
+    </button>
 
-        @endauth
-
-    </header>
+    <div id="profileMenu" class="absolute right-0 mt-2 bg-white border rounded-lg shadow-lg py-2 w-40 hidden z-50">
+        <a href="{{ route('profile') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Your Profile</a>
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button type="submit" class="w-full text-left px-4 py-2 text-sm text-red-700 hover:bg-gray-100">
+                Logout
+            </button>
+        </form>
+    </div>
+    </div>
 </div>
+@endauth
+    </header>
+
 
 <div id="authModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
     <div class="bg-white w-[95%] max-w-sm md:max-w-md rounded-2xl py-10 px-6 md:px-10 shadow-xl relative">
@@ -152,11 +147,11 @@
                 Login
             </button>
         </form>
-
         <p class="text-sm text-center text-gray-600 mt-6">
-            Already have an account?
-            <a href="#" class="text-blue-600 hover:underline">Log in</a>
+            Don’t have an account?
+            <button onclick="switchToRegister()" class="text-blue-600 hover:underline">Sign up</button>
         </p>
+        
     </div>
 </div>
 
@@ -218,3 +213,82 @@
         }
     });
 </script>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+    const loginForm = document.getElementById('loginForm');
+    if (loginForm) {
+        loginForm.addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const formData = new FormData(loginForm);
+
+            try {
+                const response = await fetch(loginForm.action, {
+                    method: "POST",
+                    headers: {
+                        "X-CSRF-TOKEN": document.querySelector('input[name="_token"]').value,
+                        "Accept": "application/json"
+                    },
+                    body: formData
+                });
+
+                if (response.ok) {
+                    window.location.href = "/"; 
+                } else {
+                    const errorData = await response.json();
+                    alert(Object.values(errorData.errors).flat().join('\n'));
+                }
+            } catch (err) {
+                alert('Something went wrong.');
+                console.error(err);
+            }
+        });
+    }
+});
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const alertBox = document.getElementById('loginSuccessAlert');
+        if (alertBox) {
+            setTimeout(() => {
+                alertBox.remove(); 
+            }, 4000); 
+        }
+    });
+</script>
+
+
+<script>
+    function toggleProfileMenu() {
+        const menu = document.getElementById('profileMenu');
+        if (menu) {
+            menu.classList.toggle('hidden');
+        }
+    }
+
+    document.addEventListener('click', function (event) {
+        const dropdown = document.getElementById('profileDropdown');
+        const menu = document.getElementById('profileMenu');
+
+        if (dropdown && !dropdown.contains(event.target)) {
+            menu.classList.add('hidden');
+        }
+    });
+</script>
+
+<script>
+    if (response.ok) {
+    window.location.href = "/"; 
+}
+</script>
+<script>
+    function switchToRegister() {
+        document.getElementById('loginModal').classList.add('hidden');
+        document.getElementById('authModal').classList.remove('hidden');
+    }
+</script>
+
+

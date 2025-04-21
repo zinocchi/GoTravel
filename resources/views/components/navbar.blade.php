@@ -10,7 +10,7 @@
         <h1 class="text-2xl font-bold flex items-center">
             <span class="text-green-500">GO</span> Travel
         </h1>
-        <nav class="flex-1 text-center justify-center">
+        <nav class="absolute left-1/2 transform -translate-x-1/2">
             <div class="inline-block space-x-6">
                 <a href="#" class="text-gray-600 text-sm font-bold hover:text-blue-500">Discover </a>
                 <a href="#" class="text-gray-600 text-sm font-bold hover:text-blue-500">Trips</a>
@@ -23,9 +23,7 @@
         <button onclick="toggleModal(true)" class="text-sm font-semibold text-white-700 hover:text-blue-500">
             Sign Up
         </button>
-
 @endguest
-
 
 
     @if (session('login_success'))
@@ -38,8 +36,9 @@
 @auth
 <div class="relative" id="profileDropdown">
     <button onclick="toggleProfileMenu()" class="flex items-center space-x-2 cursor-pointer">
-        <img src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&background=33dfa1&color=fff&rounded=true&size=32"
-            alt="Avatar" class="w-8 h-8 rounded-full" />
+        @if(Auth::check() && Auth::user()->photo)
+    <img src="{{ asset('storage/' . Auth::user()->photo) }}" alt="Profile Photo" class="w-10 h-10 rounded-full">
+@endif
         <span class="text-sm font-semibold text-gray-700">{{ Auth::user()->name }}</span>
     </button>
 
@@ -114,6 +113,7 @@
     </div>
 </div>
 
+
 <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
     <div class="bg-white w-[95%] max-w-sm md:max-w-md rounded-2xl py-10 px-6 md:px-10 shadow-xl relative">
 
@@ -172,45 +172,38 @@
             show ? modal.classList.remove('hidden') : modal.classList.add('hidden');
         }
     }
+    document.addEventListener("DOMContentLoaded", function() {
+    const form = document.getElementById('registerForm');
+    if (form) {
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
 
-    // document.addEventListener("DOMContentLoaded", function() {
-    //     const form = document.getElementById('registerForm');
-    //     if (form) {
-    //         form.addEventListener('submit', async function(e) {
-    //             e.preventDefault();
+            const formData = new FormData(form);
 
-    //             const formData = new FormData(form);
+            try {
+                const response = await fetch(form.action, {
+                    method: "POST",
+                    headers: {
+                        "X-CSRF-TOKEN": document.querySelector('input[name="_token"]').value,
+                        "Accept": "application/json"
+                    },
+                    body: formData
+                });
 
-    //             try {
-    //                 const response = await fetch(form.action, {
-    //                     method: "POST",
-    //                     headers: {
-    //                         "X-CSRF-TOKEN": document.querySelector('input[name="_token"]')
-    //                             .value,
-    //                         "Accept": "application/json"
-    //                     },
-    //                     body: formData
-    //                 });
+                if (response.ok) {
+                    window.location.href = "/";
+                } else {
+                    const errorData = await response.json();
+                    alert(Object.values(errorData.errors).flat().join('\n'));
+                }
+            } catch (err) {
+                alert('Something went wrong.');
+                console.error(err);
+            }
+        });
+    }
+});
 
-    //                 if (response.ok) {
-    //                     toggleModal(false);
-    //                     const notif = document.createElement('div');
-    //                     notif.className =
-    //                         'fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded shadow-md z-50';
-    //                     notif.innerText = 'Sign up successful!';
-    //                     document.body.appendChild(notif);
-    //                     setTimeout(() => notif.remove(), 4000);
-    //                     form.reset();
-    //                 } else {
-    //                     const errorData = await response.json();
-    //                     alert(Object.values(errorData.errors).flat().join('\n'));
-    //                 }
-    //             } catch (err) {
-    //                 alert('Something went wrong.' . err);
-    //             }
-    //         });
-    //     }
-    // });
 </script>
 
 <script>
@@ -223,26 +216,26 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const formData = new FormData(loginForm);
 
-            // try {
-            //     const response = await fetch(loginForm.action, {
-            //         method: "POST",
-            //         headers: {
-            //             "X-CSRF-TOKEN": document.querySelector('input[name="_token"]').value,
-            //             "Accept": "application/json"
-            //         },
-            //         body: formData
-            //     });
+             try {
+                 const response = await fetch(loginForm.action, {
+                     method: "POST",
+                     headers: {
+                         "X-CSRF-TOKEN": document.querySelector('input[name="_token"]').value,
+                         "Accept": "application/json"
+                     },
+                     body: formData
+                 });
 
-            //     if (response.ok) {
-            //         window.location.href = "/";
-            //     } else {
-            //         const errorData = await response.json();
-            //         alert(Object.values(errorData.errors).flat().join('\n'));
-            //     }
-            // } catch (err) {
-            //     alert('Something went wrong.' . err);
-            //     console.error(err);
-            // }
+                 if (response.ok) {
+                     window.location.href = "/";
+                } else {
+                     const errorData = await response.json();
+                    alert(Object.values(errorData.errors).flat().join('\n'));
+                 }
+             } catch (err) {
+                alert('Something went wrong.' . err);
+                 console.error(err);
+             }
         });
     }
 });
@@ -258,6 +251,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 </script>
+
 
 
 <script>

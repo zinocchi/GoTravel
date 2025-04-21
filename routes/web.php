@@ -27,10 +27,6 @@ use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Auth;
 
 Route::post('/register', [AuthController::class, 'register'])->name('register');
-
-
-Route::get('/search', [SearchController::class, 'index'])->name('search');
-
 Route::get('/register', function () {
     return view('register');
 });
@@ -61,7 +57,10 @@ Route::middleware(['auth'])->group(function () {
 
 use App\Http\Controllers\SearchController;
 
-Route::get('/search', [SearchController::class, 'index'])->name('search');
+Route::get('/search', [SearchController::class, 'search'])->name('search');
+
+
+
 
 
 

@@ -10,11 +10,11 @@ use App\Models\ToDo;
 
 class SearchController extends Controller
 {
-    public function index(Request $request)
+    public function search(Request $request)
     {
         $query = $request->input('q');
 
-        $hotels = Hotel::where('name', 'like', "%{$query}%")->get();
+        $hotels = Hotel::where('name', 'like','%' . $request->search . '%')->get();
         $villas = Villa::where('name', 'like', "%{$query}%")->get();
         $flights = Flight::where('destination', 'like', "%{$query}%")->get();
         $toDos  = ToDo::where('activity', 'like', "%{$query}%")->get();

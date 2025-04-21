@@ -1,37 +1,10 @@
-<h2>Search results for: "{{ $query }}"</h2>
+<h2>Search Results</h2>
 
-@if($hotels->count())
-  <h3>Hotels</h3>
-  <ul>
-    @foreach($hotels as $hotel)
-      <li>{{ $hotel->name }}</li>
-    @endforeach
-  </ul>
-@endif
-
-@if($villas->count())
-  <h3>Villas</h3>
-  <ul>
-    @foreach($villas as $villa)
-      <li>{{ $villa->name }}</li>
-    @endforeach
-  </ul>
-@endif
-
-@if($flights->count())
-  <h3>Flights</h3>
-  <ul>
-    @foreach($flights as $flight)
-      <li>{{ $flight->destination }}</li>
-    @endforeach
-  </ul>
-@endif
-
-@if($toDos->count())
-  <h3>To Do</h3>
-  <ul>
-    @foreach($toDos as $todo)
-      <li>{{ $todo->activity }}</li>
-    @endforeach
-  </ul>
-@endif
+@forelse ($hotels as $hotel)
+    <div class="p-4 border-b">
+        <h3 class="text-lg font-bold">{{ $hotel->name }}</h3>
+        <p>{{ $hotel->description }}</p>
+    </div>
+@empty
+    <p>No hotels found.</p>
+@endforelse

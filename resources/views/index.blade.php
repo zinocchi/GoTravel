@@ -38,7 +38,7 @@
       <img src="{{ asset('search.png') }}" alt="Search" class="h-5 w-5 group-hover:scale-110 transition-transform duration-200" />
       <span class="text-sm md:text-base text-gray-800 group-hover:text-black font-medium">Search All</span>
     </a>
-    <a href="flights" class="group flex items-center space-x-2 py-2 border-b-2 border-transparent hover:border-black transition-all duration-200">
+    <a href="fligths" class="group flex items-center space-x-2 py-2 border-b-2 border-transparent hover:border-black transition-all duration-200">
       <img src="{{ asset('plane.png') }}" alt="Flight" class="h-5 w-5 group-hover:scale-110 transition-transform duration-200" />
       <span class="text-sm md:text-base text-gray-800 group-hover:text-black">Flights</span>
     </a>

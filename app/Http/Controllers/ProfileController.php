@@ -18,8 +18,8 @@ class ProfileController extends Controller
         $user = Auth::user();
 
         $request->validate([
-            'name' => 'required|string|max:255',
-            'photo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
+           'name' => 'required|string|max:255',
+           'photo' => 'nullable|image|max:2048',
         ]);
 
         $user->name = $request->name;
@@ -35,7 +35,7 @@ class ProfileController extends Controller
             $user->photo = $path;
         }
 
-        // $user->save();
+         $user->save();
 
         return redirect()->back()->with('success', 'Profile updated!');
     }

@@ -13,6 +13,20 @@
     }
   </style>
 </head>
+
+<h2 class="text-xl font-bold mb-4">Search Results</h2>
+
+@forelse($hotels as $hotel)
+    <div class="p-4 border mb-4 rounded">
+        <h3 class="font-bold">{{ $hotel->name }}</h3>
+        <p>{{ $hotel->description }}</p>
+        <p class="text-sm text-gray-500">{{ $hotel->location }}</p>
+        <p class="text-blue-500 font-semibold">Rp {{ number_format($hotel->price, 0, ',', '.') }}</p>
+    </div>
+@empty
+    <p>No results found.</p>
+@endforelse
+
 <body class="bg-white text-gray-800">
 
   <header class="w-full border-b shadow-sm px-6 md:px-12 py-4">
@@ -22,7 +36,7 @@
       </h1>
       <form action="{{ route('search') }}" method="GET" class="w-full">
         <div class="relative w-full max-w-md">
-          <input 
+          <input  
             type="text" 
             name="q"
             placeholder="Search" 

@@ -32,7 +32,7 @@ class AuthController extends Controller
 
 
         // dd('masuk');
-        return redirect()->route('index');
+        return redirect()->intended('/');
     }
 
     public function login(Request $request)
@@ -41,7 +41,6 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            // session()->flash('login_success', true);
             return redirect()->route('index');
         }
 

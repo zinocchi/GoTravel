@@ -16,30 +16,21 @@
 
 <h2 class="text-xl font-bold mb-4">Search Results</h2>
 
-@forelse($hotels as $hotel)
-    <div class="p-4 border mb-4 rounded">
-        <h3 class="font-bold">{{ $hotel->name }}</h3>
-        <p>{{ $hotel->description }}</p>
-        <p class="text-sm text-gray-500">{{ $hotel->location }}</p>
-        <p class="text-blue-500 font-semibold">Rp {{ number_format($hotel->price, 0, ',', '.') }}</p>
-    </div>
-@empty
-    <p>No results found.</p>
-@endforelse
+
 
 <body class="bg-white text-gray-800">
 
   <header class="w-full border-b shadow-sm px-6 md:px-12 py-4">
     <div class="flex items-center justify-between w-full">
       <h1 class="text-2xl font-bold flex items-center">
-        <span class="text-green-500">GO</span> Travel 
+        <span class="text-green-500">GO</span> Travel
       </h1>
       <form action="{{ route('search') }}" method="GET" class="w-full">
         <div class="relative w-full max-w-md">
-          <input  
-            type="text" 
+          <input
+            type="text"
             name="q"
-            placeholder="Search" 
+            placeholder="Search"
             class="w-full px-4 py-2 border rounded-full ml-1"
           />
           <button type="submit" class="absolute right-4 top-2.5">
@@ -49,7 +40,7 @@
           </button>
         </div>
       </form>
-      
+
 
       <div class="flex items-center space-x-6 font-medium text-sm">
         <a href="#" class="hover:text-green-600">Discover</a>
@@ -59,7 +50,7 @@
         <button class="bg-black text-white px-4 py-2 rounded-full text-sm">Sign In</button>
       </div>
     </div>
-  </header>   
+  </header>
 
   <nav class="bg-white px-6 md:px-12 py-2">
     <div class="max-w-7xl flex space-x-6 text-sm font-semibold text-gray-700">
@@ -72,7 +63,7 @@
   <main class="flex flex-col md:flex-row px-6 md:px-12 py-8 space-y-8 md:space-y-0 md:space-x-8">
 
     <aside class="md:w-1/3 lg:w-1/4 space-y-6">
-      
+
       <div class="border-2 border-purple-500 rounded-md overflow-hidden relative">
         <img src="https://via.placeholder.com/300x200.png?text=Map+View" alt="Map" class="w-full" />
         <button class="bg-white border px-4 py-1 rounded-full text-sm font-semibold shadow absolute bottom-3 left-3">View Map</button>

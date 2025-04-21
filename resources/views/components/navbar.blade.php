@@ -172,74 +172,9 @@
             show ? modal.classList.remove('hidden') : modal.classList.add('hidden');
         }
     }
-    document.addEventListener("DOMContentLoaded", function() {
-    const form = document.getElementById('registerForm');
-    if (form) {
-        form.addEventListener('submit', async function(e) {
-            e.preventDefault();
-
-            const formData = new FormData(form);
-
-            try {
-                const response = await fetch(form.action, {
-                    method: "POST",
-                    headers: {
-                        "X-CSRF-TOKEN": document.querySelector('input[name="_token"]').value,
-                        "Accept": "application/json"
-                    },
-                    body: formData
-                });
-
-                if (response.ok) {
-                    window.location.href = "/";
-                } else {
-                    const errorData = await response.json();
-                    alert(Object.values(errorData.errors).flat().join('\n'));
-                }
-            } catch (err) {
-                alert('Something went wrong.');
-                console.error(err);
-            }
-        });
-    }
-});
 
 </script>
 
-<script>
-
-document.addEventListener("DOMContentLoaded", function () {
-    const loginForm = document.getElementById('loginForm');
-    if (loginForm) {
-        loginForm.addEventListener('submit', async function (e) {
-            e.preventDefault();
-
-            const formData = new FormData(loginForm);
-
-             try {
-                 const response = await fetch(loginForm.action, {
-                     method: "POST",
-                     headers: {
-                         "X-CSRF-TOKEN": document.querySelector('input[name="_token"]').value,
-                         "Accept": "application/json"
-                     },
-                     body: formData
-                 });
-
-                 if (response.ok) {
-                     window.location.href = "/";
-                } else {
-                     const errorData = await response.json();
-                    alert(Object.values(errorData.errors).flat().join('\n'));
-                 }
-             } catch (err) {
-                alert('Something went wrong.' . err);
-                 console.error(err);
-             }
-        });
-    }
-});
-</script>
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {

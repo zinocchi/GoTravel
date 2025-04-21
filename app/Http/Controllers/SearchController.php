@@ -12,14 +12,17 @@ class SearchController extends Controller
 {
     public function search(Request $request)
     {
-        $query = $request->input('q');
+        if ($request->input('query') == 'hotel') {
+            return redirect('/hotel');
+        } else if ($request->input('query') == 'villa') {
+            return redirect('/villa');
+        } else if ($request->input('query') == 'flights') {
+            return redirect('/fligths');
+        } else if ($request->input('query') == 'todo') {
+            return redirect('/to-do');
+        } else {
+            return redirect('/')->with('error', 'Invalid search query');
+        }
 
-        $hotels = Hotel::where('name', 'like','%' . $request->search . '%')->get();
-        $villas = Villa::where('name', 'like', "%{$query}%")->get();
-        $flights = Flight::where('destination', 'like', "%{$query}%")->get();
-        $toDos  = ToDo::where('activity', 'like', "%{$query}%")->get();
-
-        return view('search.results', compact('query', 'hotels', 'villas', 'flights', 'toDos'));
     }
 }
- 
